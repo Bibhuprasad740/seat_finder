@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:seat_finder/global_variables.dart';
+import 'package:seat_finder/views/widgets/block.dart';
 import 'package:seat_finder/views/widgets/seat.dart';
 
 import '../controllers/seat_controller.dart';
@@ -14,10 +17,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final itemKey = GlobalKey();
   int seatNo = 0;
+  List<int> sequence = [0, 1, 2, 6, 3, 4, 5, 7];
+  List<int> seatNos = [];
 
-  int getSeatNo() {
-    return ++seatNo;
+  generate(int index) {
+    int i = index + (pow(8, index - 1)) as int;
+    for (; i < pow(8, index); i++) {
+      seatNos.insert(sequence[i], i);
+    }
   }
 
   @override
@@ -39,12 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 30,
+          vertical: 5,
         ),
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               Text(
                 'Seat Finder',
                 style: TextStyle(
@@ -80,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: FocusScope.of(context).unfocus,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 30,
@@ -107,26 +118,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(height: size.height * 0.05),
-              GridView.builder(
+              ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 6,
-                  mainAxisSpacing: 2,
-                  crossAxisSpacing: 2,
+                itemCount: 12,
+                itemBuilder: (context, index) => Container(
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor.withOpacity(0.5),
+                      width: 3,
+                    ),
+                  ),
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  child: Block(initindex: index + 1),
                 ),
-                itemCount: 100,
-                itemBuilder: (context, index) => ((index + 1) % 6 == 4) ||
-                        ((index + 1) % 6 == 5)
-                    ? Container()
-                    : Seat(
-                        isSelected: SeatController.sController.value.text == ''
-                            ? false
-                            : int.parse(
-                                    SeatController.sController.value.text) ==
-                                (index + 1),
-                        seatNo: index + 1,
-                      ),
               )
             ],
           ),

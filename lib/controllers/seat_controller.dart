@@ -6,5 +6,4 @@ class SeatController extends GetxController {
 
   static final Rx<TextEditingController> sController =
       TextEditingController().obs;
-  final Rx<bool> isHighLighted = false.obs;
 }

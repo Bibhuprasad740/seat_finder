@@ -12,7 +12,7 @@ class GlobalVariables {
   static const darkBackgroundColor = Color.fromARGB(255, 5, 0, 27);
   static const lightBackgroundColor = Colors.white;
   static const selectedColor = Color.fromARGB(255, 2, 74, 207);
-  static var accentColor = Colors.teal.shade200;
+  static var accentColor = Colors.lightBlue.shade200;
   static const darkPrimaryColor = Colors.white;
   static const lightPrimaryColor = Colors.black;
   static const secondaryColor = Colors.grey;

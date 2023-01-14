@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:seat_finder/controllers/theme_controller.dart';
 import 'package:seat_finder/views/home_screen.dart';
+import 'package:seat_finder/views/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Seat Finder',
       theme: ThemeController.lightTheme,
       darkTheme: ThemeController.darkTheme,
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
